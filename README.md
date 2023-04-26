@@ -1,4 +1,4 @@
-# manipulacao-do-dom
+# Manipulação do DOM
 
 ## O que é DOM?
 
