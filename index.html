@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8" />
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: "Droid Serif";
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Yanone Kaffeesatz";
+        font-weight: normal;
+      }
+      .remark-code,
+      .remark-inline-code {
+        font-family: "Ubuntu Mono";
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Manipulação do DOM
+
+---
+
+# O que é DOM?
+
+DOM (acrônimo de Document Object Model) é uma representação estruturada em forma de árvore de um documento HTML ou XML. Ele fornece uma interface programática para manipular o conteúdo e a estrutura do documento, permitindo que os desenvolvedores criem dinamicamente e alterem o conteúdo de uma página da web usando JavaScript ou outras linguagens de script.
+
+O DOM é dividido em nós que representam diferentes partes do documento, como elementos HTML, atributos, texto e comentários. Cada nó pode ter filhos, irmãos e um pai, formando assim uma árvore hierárquica.
+
+O uso do DOM é fundamental para a criação de sites interativos e dinâmicos, permitindo a manipulação do conteúdo e da aparência da página em tempo real, sem precisar recarregar a página. Além disso, ele também é usado em outras tecnologias web, como CSS e XML.
+
+---
+
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exemplo DOM</title>
+  </head>
+  <body>
+    <h1 id="titulo">Olá mundo!</h1>
+    <p>Este é um exemplo de uso do DOM.</p>
+    <script src="script.js"></script>
+  </body>
+</html>
+```
+
+```javascript
+// seleciona o elemento <h1> pelo seu ID
+var titulo = document.getElementById("titulo");
+
+// muda o conteúdo do elemento
+titulo.innerHTML = "Novo título";
+
+// adiciona uma nova classe CSS ao elemento
+titulo.classList.add("destaque");
+
+// seleciona todos os elementos <p> na página
+var paragrafos = document.getElementsByTagName("p");
+
+// altera o conteúdo de todos os parágrafos
+for (var i = 0; i < paragrafos.length; i++) {
+  paragrafos[i].innerHTML = "Este texto foi alterado pelo JavaScript.";
+}
+```
+---
+
+# O que são os objetos window e document?
+
+`window` e `document` são objetos nativos do JavaScript que são fundamentais para a interação com o DOM e a manipulação de páginas web.
+
+O objeto window representa a janela do navegador e fornece uma interface para interagir com ela. Ele é a raiz do objeto global em um navegador e contém muitas propriedades e métodos úteis para trabalhar com a janela do navegador, incluindo redimensionamento, movimento, manipulação de cookies, gerenciamento de histórico de navegação, entre outras.
+
+Já o objeto document representa a página carregada em uma janela do navegador e fornece uma interface para interagir com o conteúdo da página. Ele é um objeto filho do objeto window e contém muitas propriedades e métodos úteis para trabalhar com o DOM, como acesso a elementos HTML, criação e exclusão de elementos, alteração de conteúdo, manipulação de formulários, entre outras.
+
+Em resumo, o objeto window é responsável pela manipulação da janela do navegador, enquanto o objeto document é responsável pela manipulação do conteúdo da página. Ambos são objetos fundamentais no desenvolvimento de páginas web dinâmicas e interativas.
+
+---
+
+
+```javascript
+// define uma variável global usando o objeto window
+window.nome = "João";
+
+// adiciona um novo elemento ao documento usando o objeto document
+var paragrafo = document.createElement("p");
+paragrafo.textContent = "Bem-vindo, " + nome + "!";
+document.body.appendChild(paragrafo);
+
+// abre uma nova janela usando o objeto window
+var novaJanela = window.open(
+  "http://www.exemplo.com",
+  "janelaExemplo",
+  "width=600,height=400"
+);
+
+// define um temporizador para fechar a janela após 5 segundos
+setTimeout(function () {
+  novaJanela.close();
+}, 5000);
+```
+
+Neste exemplo, usamos o objeto `window` para definir uma variável global nome e abrir uma nova janela com o método `window.open()`. Também usamos o objeto `document` para criar um novo elemento p e adicioná-lo ao corpo da página usando o método `appendChild()`.
+
+Por fim, usamos o método `setTimeout()` para definir um temporizador de 5 segundos para fechar a nova janela usando o método `close()` do objeto window. Esses são apenas alguns exemplos do uso desses objetos em JavaScript, e há muitas outras propriedades e métodos disponíveis para interagir com a janela do navegador e o conteúdo da página.
+
+---
+
+# Diferença de getElementById, getElementsByClassName, querySelector e querySelectorAll?
+
+- `getElementById()`: seleciona um único elemento com o ID especificado. É a forma mais rápida e eficiente de selecionar um elemento específico na página, já que o ID deve ser único em todo o documento. Retorna um único elemento.
+
+- `getElementsByClassName()`: seleciona uma lista de elementos que possuem a classe CSS especificada. Retorna uma lista de elementos, que pode estar vazia se nenhum elemento corresponder à classe especificada.
+
+- `querySelector()`: seleciona o primeiro elemento que corresponde ao seletor CSS especificado. O seletor CSS pode ser uma classe, um ID, um tipo de elemento ou uma combinação desses. Retorna um único elemento.
+
+- `querySelectorAll()`: seleciona todos os elementos que correspondem ao seletor CSS especificado. O seletor CSS pode ser uma classe, um ID, um tipo de elemento ou uma combinação desses. Retorna uma lista de elementos, que pode estar vazia se nenhum elemento corresponder ao seletor especificado.
+
+---
+
+Em geral, `getElementById()` é a opção mais rápida e eficiente para selecionar um elemento específico, enquanto `querySelector()` e `querySelectorAll()` são mais flexíveis e podem ser usados para selecionar elementos com base em uma variedade de critérios CSS. `getElementsByClassName()` é útil para selecionar vários elementos com base em uma classe comum.
+
+```html
+<div id="exemplo">
+  <p class="texto">Este é um parágrafo de texto.</p>
+  <p class="texto">Este é outro parágrafo de texto.</p>
+  <p class="outro-texto">Este é um parágrafo de outro tipo de texto.</p>
+</div>
+```
+
+```javascript
+// usando getElementById para selecionar um elemento com ID específico
+var exemplo = document.getElementById("exemplo");
+console.log(exemplo); // retorna o elemento com ID "exemplo"
+
+// usando getElementsByClassName para selecionar elementos com classe específica
+var texto = document.getElementsByClassName("texto");
+console.log(texto); // retorna uma lista de elementos com classe "texto"
+
+// usando querySelector para selecionar o primeiro elemento correspondente a um seletor CSS
+var primeiroTexto = document.querySelector(".texto");
+console.log(primeiroTexto); // retorna o primeiro elemento com classe "texto"
+
+// usando querySelectorAll para selecionar todos os elementos correspondentes a um seletor CSS
+var todosOsTextos = document.querySelectorAll(".texto");
+console.log(todosOsTextos); // retorna uma lista de todos os elementos com classe "texto"
+```
+
+---
+
+# O que é um Element no JavaScript?
+
+Em JavaScript, um Element é um objeto que representa um elemento HTML no Document Object Model (DOM). Um Element pode ser um elemento raiz (como a tag `<html>`) ou um elemento filho de outro elemento (como um `<div>` dentro de um `<body>`).
+
+Cada elemento HTML é representado como um nó no DOM, e esses nós podem ser acessados, manipulados e atualizados por meio de JavaScript. Por exemplo, você pode usar o método `document.createElement()` para criar um novo elemento e o método `appendChild()` para adicioná-lo como um filho de outro elemento existente.
+
+Além disso, cada Element possui propriedades que podem ser usadas para obter ou modificar suas características, como o seu conteúdo HTML interno (innerHTML), seus atributos (`id`, `class`, `data- \*`, etc.) e suas propriedades de estilo (`style`).
+
+Por exemplo, suponha que você tenha um elemento `<div>` com o ID "exemplo" em sua página HTML. Você pode selecionar esse elemento usando o método `getElementById()` e, em seguida, atualizar seu conteúdo e propriedades de estilo da seguinte forma:
+
+---
+
+```javascript
+var exemploDiv = document.getElementById("exemplo");
+exemploDiv.innerHTML = "Novo conteúdo do elemento";
+exemploDiv.style.backgroundColor = "blue";
+exemploDiv.style.color = "white";
+```
+
+Neste exemplo, a variável `exemploDiv` é usada para armazenar uma referência ao elemento `<div>` com o ID "exemplo". Em seguida, as propriedades `innerHTML`, `backgroundColor` e `color` do Element são atualizadas para alterar o conteúdo do elemento e suas propriedades de estilo.
+
+---
+
+# Diferença de innerHTML, innerText e textContent
+
+As três propriedades `innerHTML`, `innerText` e `textContent` são usadas para obter ou definir o conteúdo de um elemento HTML em JavaScript. No entanto, elas têm diferenças importantes na forma como funcionam.
+
+A propriedade `innerHTML` retorna ou define o conteúdo HTML interno de um elemento, incluindo as tags HTML e seu conteúdo. Portanto, se você definir o valor da propriedade innerHTML para uma string que contém tags HTML, o navegador interpretará essas tags e adicionará o conteúdo correspondente ao elemento.
+
+Por exemplo, se você definir `element.innerHTML = "<strong>texto em negrito</strong>"`, o texto será renderizado em negrito no navegador.
+
+A propriedade `innerText`, por outro lado, retorna ou define apenas o texto visível dentro de um elemento, excluindo quaisquer tags HTML. Portanto, se houver tags HTML dentro do elemento, elas serão ignoradas e apenas o texto visível será retornado.
+
+---
+
+Já a propriedade `textContent` retorna ou define todo o texto contido em um elemento, incluindo o texto dentro de quaisquer tags HTML. No entanto, as tags HTML são tratadas como texto e não são interpretadas pelo navegador.
+
+Por exemplo, se você definir `element.textContent = "<strong>texto em negrito</strong>"`, a string `<strong>texto em negrito</strong>` será exibida literalmente no elemento, incluindo as tags HTML.
+
+Em resumo, a diferença entre `innerHTML`, `innerText` e `textContent` é que `innerHTML` retorna ou define o conteúdo HTML do elemento, `innerText` retorna ou define apenas o texto visível dentro do elemento, excluindo as tags HTML, e `textContent` retorna ou define todo o texto dentro do elemento, incluindo as tags HTML como texto simples.
+
+```html
+<div id="exemplo">
+  <strong>Texto em negrito</strong> e <em>texto em itálico</em>
+</div>
+```
+
+```javascript
+var exemploDiv = document.getElementById("exemplo");
+
+console.log(exemploDiv.innerHTML); // "<strong>Texto em negrito</strong> e <em>texto em itálico</em>"
+console.log(exemploDiv.innerText); // "Texto em negrito e texto em itálico"
+console.log(exemploDiv.textContent); // "Texto em negrito e texto em itálico"
+
+exemploDiv.innerHTML = "<em>Nova</em> string de <strong>conteúdo</strong>";
+exemploDiv.innerText = "Nova string de conteúdo";
+exemploDiv.textContent = "Nova string de conteúdo";
+```
+
+---
+
+Observe como os valores de `innerHTML`, `innerText` e `textContent` são diferentes. `innerHTML` inclui as tags HTML, enquanto `innerText` retorna apenas o texto visível e textContent inclui todo o texto, incluindo as tags HTML como texto simples.
+
+Em seguida, o código atualiza o conteúdo do elemento usando as três propriedades. Quando `innerHTML` é definido, as tags HTML na string são interpretadas pelo navegador e o texto é formatado em negrito. Quando `innerText` é definido, as tags HTML são ignoradas e apenas o texto visível é exibido. Quando `textContent` é definido, a string é definida literalmente, incluindo as tags HTML.
+
+---
+
+# Qual a diferença entre uma NodeList e uma array comum? Como transformar a NodeList em uma array?
+
+Uma `NodeList` é um objeto que representa uma coleção de nós de um documento HTML, como aqueles retornados pelos métodos `querySelectorAll()` ou childNodes. Uma `NodeList` é semelhante a um array, mas não é um array real e não possui todos os métodos e propriedades de um array.
+
+A principal diferença entre uma `NodeList` e um array é que uma `NodeList` é uma coleção somente leitura de nós, o que significa que você não pode adicionar, remover ou alterar elementos diretamente na `NodeList`. Por outro lado, um array é uma estrutura de dados mutável que permite adicionar, remover e alterar elementos em tempo de execução.
+
+No entanto, é possível converter uma `NodeList` em um array para que você possa acessar todos os métodos e propriedades de um array. Para fazer isso, você pode usar o método `Array.from()` ou o operador spread (`...`) do ES6.
+
+---
+
+Aqui está um exemplo de como converter uma `NodeList` em um array usando o método`Array.from()`:
+
+```javascript
+// Obter uma NodeList de todos os elementos <p> na página
+var nodeList = document.querySelectorAll("p");
+
+// Converter a NodeList em um array
+var array = Array.from(nodeList);
+
+// Usar métodos de array no array resultante
+array.push("novo elemento");
+array.forEach(function (element) {
+  console.log(element.textContent);
+});
+```
+
+E aqui está um exemplo de como converter uma NodeList em um array usando o operador spread (`...`):
+
+```javascript
+// Obter uma NodeList de todos os elementos <p> na página
+var nodeList = document.querySelectorAll("p");
+
+// Converter a NodeList em um array usando o operador spread
+var array = [...nodeList];
+
+// Usar métodos de array no array resultante
+array.push("novo elemento");
+array.forEach(function (element) {
+  console.log(element.textContent);
+});
+```
+---
+
+Observe que, ao converter uma `NodeList` em um array, você pode adicionar, remover e alterar elementos no array resultante. No entanto, as mudanças que você faz no array não afetam a NodeList original, já que a NodeList é somente leitura.
+
+---
+
+# Como criar elementos via JavaScript com document.createElement e element.appendChild
+
+Para criar um novo elemento usando JavaScript, você pode usar o método `document.createElement(tagName)`, onde `tagName` é o nome da tag HTML que você deseja criar. Em seguida, você pode adicionar o elemento ao documento usando o método `element.appendChild(newElement)`.
+
+Aqui está um exemplo de como criar um novo elemento `<p>` e adicioná-lo ao `<body>` do documento:
+
+```javascript
+// Crie um novo elemento <p>
+var novoParagrafo = document.createElement("p");
+
+// Defina o texto do parágrafo
+novoParagrafo.textContent = "Este é um novo parágrafo criado com JavaScript!";
+
+// Adicione o parágrafo ao <body>
+document.body.appendChild(novoParagrafo);
+```
+
+---
+
+O código acima cria um novo elemento `<p>` usando o método `document.createElement('p')`, define seu texto usando a propriedade textContent e, em seguida, adiciona o elemento ao `<body>` usando o método `document.body.appendChild(novoParagrafo)`.
+
+Observe que você pode criar qualquer tag HTML usando o método `document.createElement(tagName)`. Por exemplo, para criar uma imagem, você pode usar `document.createElement('img')` e, em seguida, definir o atributo src para o caminho da imagem usando a propriedade `setAttribute()`. Depois, você pode adicioná-la a um elemento pai usando `element.appendChild(novaImagem)`.
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
